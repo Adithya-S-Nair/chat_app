@@ -12,6 +12,7 @@ const checkAuth = (req, res, next) => {
                 return res.status(401).json({ msg: 'Unauthorized: Invalid Token' });
             }
             req.userId = userData.userId
+            req.username = userData.username
             next();
         });
     } catch (err) {

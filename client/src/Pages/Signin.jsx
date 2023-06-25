@@ -35,10 +35,10 @@ export default function SignIn() {
     const [loginData, setLoginData] = useState({ email: "", password: "" });
     const navigate = useNavigate();
     const { user, setUser } = useContext(UserContext)
-    console.log(user);
     useEffect(() => {
-        if (user)
+        if (user) {
             navigate('/')
+        }
     }, [user])
 
     const handleInputs = (e) => {
@@ -57,7 +57,7 @@ export default function SignIn() {
             })
             .then((response) => {
                 if (response.status === 201) {
-                    setUser(response.data.id)
+                    setUser({ userId: response.data.id, username: response.data.username })
                 }
             })
             .catch(error => {

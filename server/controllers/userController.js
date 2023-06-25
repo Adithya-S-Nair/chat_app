@@ -14,10 +14,10 @@ const registerUser = (req, res) => {
     });
     newUser.save()
         .then((response) => {
-            jwt.sign({ userId: response._id }, process.env.JWT_SECRET, (err, token) => {
+            jwt.sign({ userId: response._id, username }, process.env.JWT_SECRET, (err, token) => {
                 if (err)
                     throw err
-                res.cookie('token', token).status(201).json({ id: response._id });
+                res.cookie('token', token).status(201).json({ id: response._id, username });
             })
         })
         .catch((error) => {
@@ -39,10 +39,10 @@ const loginUser = async (req, res) => {
         }
         const date = new Date()
         await User.updateOne({ email }, { $set: { lastLoggedInAt: date } });
-        jwt.sign({ userId: userData._id }, process.env.JWT_SECRET, (err, token) => {
+        jwt.sign({ userId: userData._id, username: userData.username }, process.env.JWT_SECRET, (err, token) => {
             if (err)
                 throw err
-            res.cookie('token', token).status(201).json({ id: userData._id });
+            res.cookie('token', token).status(201).json({ id: userData._id, username: userData.username });
         })
     } catch (err) {
         res.status(400).json({ error: err.message });
@@ -51,7 +51,7 @@ const loginUser = async (req, res) => {
 
 const home = (req, res) => {
     if (req.userId) {
-        return res.status(200).json({ msg: 'Authorization successful', userId: req.userId });
+        return res.status(200).json({ msg: 'Authorization successful', userId: req.userId, username: req.username });
     }
 }
 

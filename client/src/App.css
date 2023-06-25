@@ -119,8 +119,16 @@
   cursor: pointer;
 }
 
+.home .containerr .sidebar .userChat.active {
+  background-color: #2b5278;
+}
+
+.home .containerr .sidebar .userChat.active:hover {
+  background-color: #2b5278;
+}
+
 .home .containerr .sidebar .userChat:hover {
-  background-color: #2f2d52;
+  background-color: #202b36;
 }
 
 .home .containerr .sidebar .userChat img {
@@ -128,6 +136,42 @@
   height: 50px;
   border-radius: 50%;
   object-fit: cover;
+  margin-top: -1em;
+}
+
+.home .containerr .sidebar .userChat .img {
+  display: flex;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  margin-top: -1em;
+  user-select: none;
+}
+
+.home .containerr .sidebar .userChat .img.blue {
+  background-color: #2596be;
+}
+
+.home .containerr .sidebar .userChat .img.yellow {
+  background-color: #fba84f;
+}
+
+.home .containerr .sidebar .userChat .img.green {
+  background-color: #86cc5c;
+}
+
+.home .containerr .sidebar .userChat .img.purple {
+  background-color: #a488f3;
+}
+
+.home .containerr .sidebar .userChat .img.pink {
+  background-color: #fb84a6;
+}
+
+.home .containerr .sidebar .userChat .img.orange {
+  background-color: #ef7155;
 }
 
 .home .containerr .sidebar .userChat .userChatInfo span {
@@ -151,6 +195,44 @@
   border-radius: 50%;
   object-fit: cover;
   margin-right: 1em;
+}
+
+.home .containerr .chat .chatInfo .user div {
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+  margin-right: 1em;
+  color: white;
+  text-align: center;
+  user-select: none;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  font-size: 1rem;
+}
+
+.home .containerr .chat .chatInfo .user div.blue {
+  background-color: #2596be;
+}
+
+.home .containerr .chat .chatInfo .user div.yellow {
+  background-color: #fba84f;
+}
+
+.home .containerr .chat .chatInfo .user div.green {
+  background-color: #86cc5c;
+}
+
+.home .containerr .chat .chatInfo .user div.purple {
+  background-color: #a488f3;
+}
+
+.home .containerr .chat .chatInfo .user div.pink {
+  background-color: #fb84a6;
+}
+
+.home .containerr .chat .chatInfo .user div.orange {
+  background-color: #ef7155;
 }
 
 .home .containerr .chat .chatInfo {
@@ -187,10 +269,7 @@
 }
 
 .home .containerr .chat .messages {
-  background-color: #ddddf7;
   padding: 10px;
-  height: calc(100% - 160px);
-  overflow: scroll;
 }
 
 .home .containerr .chat .messages .message {
@@ -221,10 +300,21 @@
 }
 
 .home .containerr .chat .messages .message .messageContent p {
-  background-color: white;
+  background-color: #182533;
+  color: white;
   padding: 10px 20px;
   border-radius: 0px 10px 10px 10px;
-  max-width: max-content;
+  width: auto;
+  max-width: 20em;
+  height: auto;
+  max-height: max-content;
+  display: flex;
+  flex-direction: column;
+}
+
+.home .containerr .chat .messages .message .messageContent p span {
+  font-size: 0.6em;
+  text-align: start;
 }
 
 .home .containerr .chat .messages .message .messageContent img {
@@ -236,7 +326,7 @@
 }
 
 .home .containerr .chat .messages .message.owner .messageContent {
-  align-items: flex-end;
+  align-items: flex-start;
 }
 
 .home .containerr .chat .messages .message.owner .messageContent p {
@@ -262,7 +352,7 @@
   border: none;
   outline: none;
   color: #ffffff;
-  font-size: 18px;
+  font-size: 15px;
   background-color: #242f3d;
 }
 
@@ -287,4 +377,8 @@
   color: white;
   background-color: #242f3d;
   cursor: pointer;
+}
+
+.home .containerr .chat .input .send button svg {
+  width: 1.1em;
 }

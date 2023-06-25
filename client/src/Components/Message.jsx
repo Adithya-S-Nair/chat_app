@@ -1,22 +1,36 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { MessageContext } from '../Context/messageContext'
 
-const Message = () => {
+const Message = ({ isOur, content }) => {
+    const { messages } = useContext(MessageContext)
+    console.log(isOur);
+    console.log(content);
     return (
-        <div
-            // ref=""
-            className=""
-        >
-            <div className="messageInfo">
-                <img
-                    src=""
-                    alt=""
-                />
-                <span>just now</span>
-            </div>
-            <div className="messageContent">
-                <p>sample msg</p>
-                {/* {message.img && <img src="{message.img}" alt="" />} */}
-            </div>
+        <div className="messages">
+            {isOur === true ? <div className="message owner">
+                <div className="messageInfo">
+                    <img
+                        src=""
+                        alt=""
+                    />
+                </div>
+                <div className="messageContent">
+                    <p className='mb-0'>{content}<span>just now</span></p>
+                    {/* {message.img && <img src="{message.img}" alt="" />} */}
+                </div>
+            </div> :
+                <div className="message">
+                    <div className="messageInfo">
+                        <img
+                            src=""
+                            alt=""
+                        />
+                    </div>
+                    <div className="messageContent">
+                        <p className='mb-0'>{messages[0].text}<span>just now</span></p>
+                        {/* {message.img && <img src="{message.img}" alt="" />} */}
+                    </div>
+                </div>}
         </div>
     )
 }

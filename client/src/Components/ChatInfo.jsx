@@ -1,13 +1,9 @@
 import React, { useContext } from 'react'
 import { ChatContext } from '../Context/chatContext';
 
-const ChatInfo = () => {
+const ChatInfo = ({avatarColor}) => {
     const img = false;
-    const avatarColors = ["blue", "yellow", "green", "pink", "orange", "purple"]
     const { selectedChat } = useContext(ChatContext)
-    const userIdBase10 = parseInt(selectedChat, 16)
-    const colorIndex = userIdBase10 % avatarColors.length
-    const avatarColor = avatarColors[colorIndex]
     return (
         selectedChat && <div className="chatInfo">
             <div className="user d-flex">

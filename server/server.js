@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const ws = require('ws');
 const userRoute = require('./routes/userRoute');
+const messageRoute = require('./routes/messageRoute');
 const jwt = require('jsonwebtoken');
 const Message = require('./models/messageModel')
 const PORT = process.env.PORT || 5000;
@@ -18,6 +19,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Use the routes
 app.use('/', userRoute);
+app.use('/messages', messageRoute);
 
 mongoose.connect(process.env.MONGODB_URL, {
   useNewUrlParser: true,
@@ -68,7 +70,7 @@ wss.on('connection', (connection, req) => {
           text,
           sender: connection.userId,
           recipient,
-          id: messageDoc._id
+          _id: messageDoc._id
         })))
     }
   });

@@ -7,17 +7,27 @@ import { MessageContext } from '../Context/messageContext';
 const Chats = () => {
   const img = false
   const { user } = useContext(UserContext)
-  const { ws, setWs } = useContext(WSContext)
+  const { setWs } = useContext(WSContext)
   const { selectedChat, setSelectedChat } = useContext(ChatContext)
-  const { messages, setMessages } = useContext(MessageContext)
+  const { setMessages } = useContext(MessageContext)
   const [onlinePeople, setOnlinePeople] = useState({});
   const avatarColors = ["blue", "yellow", "green", "pink", "orange", "purple"]
 
   useEffect(() => {
+    connectToWs()
+  }, [])
+
+  const connectToWs = () => {
     const ws = new WebSocket('ws://localhost:5000')
     setWs(ws);
     ws.addEventListener('message', handleMessage)
-  }, [])
+    ws.addEventListener('close', () => {
+      setTimeout(() => {
+        console.log('Disconnected trying to reconnect');
+        connectToWs()
+      }, 1000)
+    })
+  }
 
   const showOnlinePeople = (peopleArray) => {
     const people = {}
@@ -29,12 +39,10 @@ const Chats = () => {
 
   const handleMessage = (ev) => {
     const messageData = JSON.parse(ev.data)
-    console.log({ ev, messageData });
     if ('online' in messageData) {
       showOnlinePeople(messageData.online)
     } else if ('text' in messageData) {
       setMessages(prev => ([...prev, { ...messageData }]))
-      console.log(messages);
     }
   }
 

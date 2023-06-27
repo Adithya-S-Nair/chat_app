@@ -1,3 +1,7 @@
+html {
+  scroll-behavior: smooth;
+}
+
 .pointer {
   cursor: pointer;
 }
@@ -292,6 +296,42 @@
   object-fit: cover;
 }
 
+.home .containerr .chat .messages .message .messageInfo .img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+  background-color: #2b5278;
+}
+
+.home .containerr .chat .messages .message .messageInfo .img.blue {
+  background-color: #2596be;
+}
+
+.home .containerr .chat .messages .message .messageInfo .img.yellow {
+  background-color: #fba84f;
+}
+
+.home .containerr .chat .messages .message .messageInfo .img.green {
+  background-color: #86cc5c;
+}
+
+.home .containerr .chat .messages .message .messageInfo .img.purple {
+  background-color: #a488f3;
+}
+
+.home .containerr .chat .messages .message .messageInfo .img.pink {
+  background-color: #fb84a6;
+}
+
+.home .containerr .chat .messages .message .messageInfo .img.orange {
+  background-color: #ef7155;
+}
+
 .home .containerr .chat .messages .message .messageContent {
   max-width: 80%;
   display: flex;
@@ -330,7 +370,7 @@
 }
 
 .home .containerr .chat .messages .message.owner .messageContent p {
-  background-color: #8da4f1;
+  background-color: #2b5278;
   color: white;
   border-radius: 10px 0px 10px 10px;
 }
@@ -381,4 +421,24 @@
 
 .home .containerr .chat .input .send button svg {
   width: 1.1em;
+}
+
+.custom-scrollbar {
+  overflow-y: auto;
+  scrollbar-color: #242f3d #0e1621;
+  scrollbar-width: thin;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #0e1621;
+  margin-bottom: 7em;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #242f3d;
+  border-radius: 5px;
 }

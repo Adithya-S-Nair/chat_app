@@ -5,11 +5,11 @@ import { UserContext } from '../Context/userContext';
 import { MessageContext } from '../Context/messageContext';
 
 const Input = () => {
-    const {user} = useContext(UserContext)
+    const { user } = useContext(UserContext)
     const { ws } = useContext(WSContext);
     const { selectedChat } = useContext(ChatContext);
     const [newMsg, setNewMsg] = useState('');
-    const { setMessages } = useContext(MessageContext);
+    const { messages, setMessages } = useContext(MessageContext);
     const [img, setImg] = useState(null);
     if (!newMsg) {
         document.querySelectorAll('button').setAttribute = 'disabled'
@@ -23,9 +23,11 @@ const Input = () => {
         setNewMsg('')
         setMessages(prev => ([...prev, {
             text: newMsg,
-            sender:user.userId,
-            recipient:selectedChat[0]
+            sender: user.userId,
+            recipient: selectedChat[0],
+            id: Date.now().toString()
         }]))
+        console.log(messages);
     }
     return (
         <form className="input" onSubmit={sendMessage}>

@@ -1,82 +1,124 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react';
+import axios from 'axios'
+import { Skeleton } from '@mui/material';
 import { UserContext } from '../Context/userContext';
-import { ChatContext } from '../Context/chatContext';
 import { WSContext } from '../Context/wsContext';
 import { MessageContext } from '../Context/messageContext';
+import Contacts from './Contacts';
 
 const Chats = () => {
-  const img = false
-  const { user } = useContext(UserContext)
-  const { setWs } = useContext(WSContext)
-  const { selectedChat, setSelectedChat } = useContext(ChatContext)
-  const { setMessages } = useContext(MessageContext)
+  const img = false;
+  const { user } = useContext(UserContext);
+  const { setWs } = useContext(WSContext);
+  const { setMessages } = useContext(MessageContext);
   const [onlinePeople, setOnlinePeople] = useState({});
-  const avatarColors = ["blue", "yellow", "green", "pink", "orange", "purple"]
+  const [offlinePeople, setOfflinePeople] = useState({});
+  const [loadingChats, setLoadingChats] = useState(true);
+  const avatarColors = ["blue", "yellow", "green", "pink", "orange", "purple"];
 
   useEffect(() => {
-    connectToWs()
-  }, [])
+    connectToWs();
+    setTimeout(() => {
+      setLoadingChats(false);
+    }, 500);
+  }, []);
 
   const connectToWs = () => {
-    const ws = new WebSocket('ws://localhost:5000')
+    const ws = new WebSocket('ws://localhost:5000');
     setWs(ws);
-    ws.addEventListener('message', handleMessage)
+    ws.addEventListener('message', handleMessage);
     ws.addEventListener('close', () => {
       setTimeout(() => {
         console.log('Disconnected trying to reconnect');
-        connectToWs()
-      }, 1000)
-    })
-  }
+        connectToWs();
+      }, 1000);
+    });
+  };
 
   const showOnlinePeople = (peopleArray) => {
-    const people = {}
+    const people = {};
     peopleArray.forEach(({ userId, username }) => {
-      people[userId] = username
+      people[userId] = username;
     });
-    setOnlinePeople(people)
-  }
+    setOnlinePeople(people);
+  };
 
   const handleMessage = (ev) => {
-    const messageData = JSON.parse(ev.data)
+    const messageData = JSON.parse(ev.data);
     if ('online' in messageData) {
-      showOnlinePeople(messageData.online)
+      showOnlinePeople(messageData.online);
     } else if ('text' in messageData) {
-      setMessages(prev => ([...prev, { ...messageData }]))
+      setMessages((prev) => ([...prev, { ...messageData }]));
     }
-  }
+  };
+
+  useEffect(() => {
+    if (user) {
+      axios.get('/people').then((response) => {
+        const offlinePeopleArr = response.data
+          .filter(p => p._id !== user.userId)
+          .filter(p => !Object.keys(onlinePeople).includes(p._id))
+        const offlinePeople = {};
+        offlinePeopleArr.forEach(p => {
+          offlinePeople[p._id] = p
+        })
+        setOfflinePeople(offlinePeople)
+      })
+    }
+  }, [onlinePeople])
 
   const onlinePeopleExclOurUser = { ...onlinePeople };
   user && delete onlinePeopleExclOurUser[user.userId];
+
   return (
     <div className="chats mt-3">
-      {Object.keys(onlinePeopleExclOurUser).map(userId => {
-        const username = onlinePeople[userId];
-        if (username === undefined) {
-          return null;
-        }
-        const userIdBase10 = parseInt(userId, 16)
-        const colorIndex = userIdBase10 % avatarColors.length
-        const avatarColor = avatarColors[colorIndex]
-        return (
-          <div
-            onClick={() => setSelectedChat([userId, username])}
-            className={"userChat container px-3 " + (userId === (selectedChat && selectedChat[0]) ? 'active' : '')}
-            key={userId}>
-            {img ? (
-              <img src="https://static.vecteezy.com/system/resources/thumbnails/009/313/954/small/default-avatar-profile-in-flat-design-free-png.png" alt="" />
-            ) : (
-              <div className={`img ${avatarColor}`}>{username[0]}</div>
-            )}
-            <div className="userChatInfo user-select-none">
-              <span>{username}</span>
-              <p>latest msg</p>
+      {loadingChats ? (
+        <>
+          <div className='d-flex gap-2 ps-2 pt-2'>
+            <Skeleton variant="circular" width={60} height={60} animation="wave" style={{ backgroundColor: '#242f3d' }} />
+            <div>
+              <Skeleton variant="text" width={100} animation="wave" style={{ backgroundColor: '#242f3d' }} />
+              <Skeleton variant="text" width={200} animation="wave" style={{ backgroundColor: '#242f3d' }} />
             </div>
           </div>
-        );
-      })}
+          <div className='d-flex gap-2 ps-2 pt-2'>
+            <Skeleton variant="circular" width={60} height={60} animation="wave" style={{ backgroundColor: '#242f3d' }} />
+            <div>
+              <Skeleton variant="text" width={100} animation="wave" style={{ backgroundColor: '#242f3d' }} />
+              <Skeleton variant="text" width={200} animation="wave" style={{ backgroundColor: '#242f3d' }} />
+            </div>
+          </div>
+        </>
+      ) : (
+        <>
+          {Object.keys(onlinePeopleExclOurUser).map((userId) => {
+            const username = onlinePeople[userId];
+            if (username === undefined) {
+              return null;
+            }
+            const userIdBase10 = parseInt(userId, 16);
+            const colorIndex = userIdBase10 % avatarColors.length;
+            const avatarColor = avatarColors[colorIndex];
+            return (
+              <Contacts key={userId} avatarColor={avatarColor} userId={userId} username={username} online={true} />
+            );
+          })}
+          {Object.keys(offlinePeople).map((userId) => {
+            const username = offlinePeople[userId].username;
+            if (username === undefined) {
+              return null;
+            }
+            const userIdBase10 = parseInt(userId, 16);
+            const colorIndex = userIdBase10 % avatarColors.length;
+            const avatarColor = avatarColors[colorIndex];
+            return (
+              <Contacts key={userId} avatarColor={avatarColor} userId={userId} username={username} online={false} />
+            );
+          })}
+        </>
+      )}
     </div>
   );
-}
+};
 
-export default Chats
+export default Chats;

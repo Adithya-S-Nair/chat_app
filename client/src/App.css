@@ -1,5 +1,6 @@
 html {
   scroll-behavior: smooth;
+  background-color: #0e1621;
 }
 
 .pointer {
@@ -12,6 +13,10 @@ html {
 
 .text-default {
   color: #59646f;
+}
+
+#root {
+  background-color: #0e1621;
 }
 
 .home {

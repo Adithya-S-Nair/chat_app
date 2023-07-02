@@ -15,7 +15,6 @@ const Search = () => {
                         type="text"
                         placeholder="Search"
                         onChange={(e) => setSearchKey(e.target.value)}
-                    // onKeyDown={handleKey}
                     />
                     {searchKey && <i className="fa fa-times text-default pointer" aria-hidden="true" onClick={clearKey}></i>}
                 </div>

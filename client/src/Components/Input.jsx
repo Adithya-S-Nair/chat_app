@@ -46,7 +46,7 @@ const Input = () => {
                     onChange={(ev) => setImg(ev.target.files[0])}
                 />
                 <label htmlFor="file">
-                    <i className="fa fa-paperclip text-default pointer" aria-hidden="true"></i>
+                    <i className="fa fa-paperclip text-default pointer pt-2" aria-hidden="true"></i>
                 </label>
                 <button type='submit'>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">

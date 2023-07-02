@@ -19,9 +19,12 @@ function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
             {'Copyright © '}
-            <Link to="https://mui.com/">
-                Your Website
-            </Link>{' '}
+            <Link to="/">
+                ChatterBox
+            </Link>{' by '}
+            <a href="https://www.linkedin.com/in/adithyasnair/">
+                Adithya S Nair
+            </a>{' '}
             {new Date().getFullYear()}
             {'.'}
         </Typography>
@@ -75,6 +78,7 @@ export default function SignIn() {
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
+                        color: 'white'
                     }}
                 >
                     <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -95,6 +99,26 @@ export default function SignIn() {
                             name="email"
                             autoComplete="email"
                             autoFocus
+                            sx={{
+                                '& input': {
+                                    color: 'white',
+                                },
+                                '& label': {
+                                    color: 'white',
+                                },
+                                '& .MuiOutlinedInput-root': {
+                                    '& fieldset': {
+                                        borderColor: 'white',
+                                    },
+                                },
+                            }}
+                            inputProps={{
+                                style: {
+                                    '&:hover': {
+                                        borderColor: 'initial',
+                                    },
+                                },
+                            }}
                         />
                         <TextField
                             value={loginData.password}
@@ -107,9 +131,22 @@ export default function SignIn() {
                             type="password"
                             id="password"
                             autoComplete="current-password"
+                            sx={{
+                                '& input': {
+                                    color: 'white',
+                                },
+                                '& label': {
+                                    color: 'white',
+                                },
+                                '& .MuiOutlinedInput-root': {
+                                    '& fieldset': {
+                                        borderColor: 'white',
+                                    },
+                                },
+                            }}
                         />
                         <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
+                            control={<Checkbox value="remember" color="primary" sx={{ color: 'white' }} />}
                             label="Remember me"
                         />
                         <Button
@@ -134,7 +171,7 @@ export default function SignIn() {
                         </Grid>
                     </Box>
                 </Box>
-                <Copyright sx={{ mt: 8, mb: 4 }} />
+                <Copyright sx={{ mt: 8, mb: 4, color: 'white' }} />
             </Container>
         </ThemeProvider>
     );

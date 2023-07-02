@@ -2,12 +2,12 @@ import React, { useContext } from 'react'
 import { UserContext } from '../Context/userContext'
 import { ChatContext } from '../Context/chatContext'
 
-const Message = ({ isOur, content, avatarColor }) => {
+const Message = ({ isOur, content, avatarColor, key }) => {
     const { user } = useContext(UserContext)
     const { selectedChat } = useContext(ChatContext)
     const img = false
     return (
-        <div className="messages">
+        <div className="messages" key={key}>
             {isOur === true ? <div className="message owner">
                 <div className="messageInfo">
                     {img ? <img
